@@ -7,12 +7,17 @@ Modules imported: typing, re
 
 """
 from typing import List
-from re import sub
+import re
 
 
-def filter_datum(fields: List[str], redaction: str, message: str, separator: str) -> str:
+def filter_datum(
+        fields: List[str],
+        redaction: str,
+        message: str,
+        separator: str
+) -> str:
     """Returns an obfuscated log message"""
     for field in fields:
         pattern = rf'{field}=\s*(.*?){separator}'
-        message = sub(pattern, field + '=' + redaction + separator, message)
+        message = re.sub(pattern, field + '=' + redaction + separator, message)
     return message
