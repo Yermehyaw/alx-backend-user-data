@@ -16,7 +16,5 @@ def filter_datum(
         separator: str
 ) -> str:
     """Returns an obfuscated log message"""
-    for field in fields:
-        pattern = rf'{field}=\s*(.*?){separator}'
-        message = sub(pattern, f'{field}={redaction}{separator}', message)
-    return message
+    pattern = rf'({"|".join(fields)})=\s*(.*?){separator}'
+    return sub(pattern, rf'\1={redaction}{separator}', message)
