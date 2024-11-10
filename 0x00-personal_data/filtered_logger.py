@@ -7,7 +7,7 @@ Modules imported: typing, re, logging, os, mysql.connector
 """
 from typing import (
     List,
-    Sequence,
+    Optional,
 )
 import re
 import logging
@@ -76,7 +76,7 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     db_pword = os.getenv('PERSONAL_DATA_DB_PASSWORD', '')
 
     try:
-        connection = mysql.conmector.connect(
+        connection = mysql.connector.connect(
             host=db_host,
             database=db_name,
             user=db_user,
@@ -84,6 +84,7 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
         )
     except Error as e:
         print('Falied to connect: ', e)
+        return
 
     return connection
 
