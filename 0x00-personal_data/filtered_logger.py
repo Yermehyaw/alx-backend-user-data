@@ -86,3 +86,28 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
         print('Falied to connect: ', e)
 
     return connection
+
+
+def main() -> None:
+    """Connects to a db amd hides PPIs of users"""
+    connection = get_db()
+
+    if not connection.is_connected():
+        return
+
+    cursor = connection.cursor()
+    cursor.execute('SELECT * FROM users;')
+    rows = cursor.fetchall()
+
+    # get a logger
+    logger = get_logger()
+
+    for row in rows:
+        logger.info(row)
+
+    cursor.close()
+    connection.close()
+
+
+if __name__ == '__main__':
+    main()
