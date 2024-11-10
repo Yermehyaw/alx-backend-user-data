@@ -52,7 +52,8 @@ PII_FIELDS = ("email", "ssn", "password", "ip", "user-agent")
 
 def get_logger() -> logging.Logger:
     """Returns a cust configured logger obj"""
-    user_data = logging.getLogger(__name__, propagate=False)
+    user_data = logging.getLogger(__name__)
+    user_data.propagate = False  # disable propagation to otger loggers
     user_data.setLevel(logging.INFO)  # logging no 20
 
     formatter = RedactingFormatter(PII_FIELDS)  # inst custom formatter
