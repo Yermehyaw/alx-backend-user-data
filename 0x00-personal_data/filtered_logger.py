@@ -45,3 +45,20 @@ class RedactingFormatter(logging.Formatter):
             self.fields, self.REDACTION,
             record.getMessage(), self.SEPARATOR
         )
+
+
+PII_FIELDS = ("email", "phone", "ssn", "password", "ip")
+
+
+def get_logger() -> logging.Logger:
+    """Returns a cust configured logger obj"""
+    user_data = logging.getLogger(__name__)
+    user_data.setLevel(logging.INFO)  # logging no 20
+
+    formatter = RedactingFormatter(PII_FIELDS)  # inst custom formatter
+
+    stream_handler = logging.StreamHandler()  # create output handler
+    stream_handler.setFormatter(formatter)  # set the formatter
+    user_data.addHandler(stream_handler)  # register the handler on the logger
+
+    return user_data
