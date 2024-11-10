@@ -2,7 +2,7 @@
 """
 Logs, reads and filter user sensitive/non-sesnsitive data
 
-Modules imported: typing, re, logging
+Modules imported: typing, re, logging, os, mysql.connector
 
 """
 from typing import (
@@ -11,6 +11,9 @@ from typing import (
 )
 import re
 import logging
+import os
+import mysql.connector
+from mysql.connector import Error
 
 
 def filter_datum(
@@ -63,3 +66,23 @@ def get_logger() -> logging.Logger:
     user_data.addHandler(stream_handler)  # register the handler on the logger
 
     return user_data
+
+
+def get_db() -> mysql.connector.connection.MySQLConnection:
+    """Returns a connector to a mysql DB"""
+    db_name = os.getenv('PERSONAL_DATA_DB_NAME')
+    db_host = os.getenv('PERSONAL_DATA_DB_HOST', 'localhost')
+    db_user = os.getenv('PERSONAL_DATA_DB_USERNAME', 'root')
+    db_pword = os.getenv('PERSONAL_DATA_DB_PASSWORD', '')
+
+    try:
+        connection = mysql.conmector.connect(
+            host=db_host,
+            database=db_name,
+            user=db_user,
+            password=db_pword
+        )
+    except Error as e:
+        print('Falied to connect: ', e)
+
+    return connection
