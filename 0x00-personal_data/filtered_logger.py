@@ -93,21 +93,24 @@ def main() -> None:
     """Connects to a db amd hides PPIs of users"""
     connection = get_db()
 
-    if not connection.is_connected():
+    if not connection or not connection.is_connected():
         return
 
-    cursor = connection.cursor()
-    cursor.execute('SELECT * FROM users;')
-    rows = cursor.fetchall()
+    try:
+        cursor = connection.cursor()  # You cant be too sure?
+        cursor.execute('SELECT * FROM users;')
+        rows = cursor.fetchall()
 
-    # get a logger
-    logger = get_logger()
+        # get a logger
+        logger = get_logger()
 
-    for row in rows:
-        logger.info(row)
+        for row in rows:
+            logger.info(row)
 
-    cursor.close()
-    connection.close()
+    finally:
+        if connection.is_connected():  # if conbection wasnt broken
+            cursor.close()
+            connection.close()
 
 
 if __name__ == '__main__':
