@@ -21,8 +21,8 @@ class Auth:
 
     def authorization_header(self, request=None) -> str:
         """Gets the request header from a request obj"""
-        return
+        return None
 
     def current_user(self, request=None) -> TypeVar('User'):
         """Returns the current client"""
-        return
+        return None
