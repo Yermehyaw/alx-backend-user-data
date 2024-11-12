@@ -12,13 +12,15 @@ from typing import TypeVar
 class Auth:
     """Authorization class
 
+    Attributes:
+    None
     """
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """Checks if client auth is required"""
         return False
 
     def authorization_header(self, request=None) -> str:
-        """Gets tgevrequest header from avrequest obj"""
+        """Gets the request header from a request obj"""
         return
 
     def current_user(self, request=None) -> TypeVar('User'):
