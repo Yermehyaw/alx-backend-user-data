@@ -6,9 +6,11 @@ Modules imported:
 
 """
 from api.v1.auth.auth import Auth
+from models.user import User
 import base64
 from binascii import Error
 from os import getenv
+from typing import TypeVar
 
 
 class BasicAuth(Auth):
@@ -53,3 +55,32 @@ class BasicAuth(Auth):
             return None
 
         return (parsed_credential[0], parsed_credential[1])
+
+    def user_object_from_credentials(
+            self, user_email: str, user_pwd: str
+    ) -> TypeVar('User'):
+        """Returns an instance of User that matches the credentials"""
+        if not user_email or not user_pwd:
+            return None
+
+        if not isinstance(user_email, str):
+            return None
+
+        if not isinstance(user_pwd, str):
+            return None
+
+        user = User(email=user_email, _password=user_pwd)
+
+        # If DB is not empty
+        user.load_from_file(User)  # load db to memory
+        if user.DATA:
+            # Get the user from DB
+            found = user.search(User, {'email', user_email})
+            if not found:
+                return None
+        # Validate password credential
+        if not found.is_valid_password(user_pwd):
+            return None
+
+        return found
+            
