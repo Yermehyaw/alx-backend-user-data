@@ -2,7 +2,7 @@
 """
 Authorization for API
 
-modules imported: flask.request, typing.TypeVar
+modules imported: flask.request, typing, TypeVar
 
 """
 from flask import (
@@ -40,7 +40,10 @@ class Auth:
 
     def authorization_header(self, request: Request = None) -> Optional[str]:
         """Gets the request header from a request obj"""
-        return None
+        auth_header = request.headers.get('Authorization')
+        if not request or not auth_header:
+            return None
+        return auth_header
 
     def current_user(self, request: Request = None) -> TypeVar('User'):
         """Returns the current client"""

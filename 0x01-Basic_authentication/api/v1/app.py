@@ -12,6 +12,11 @@ import os
 app = Flask(__name__)
 app.register_blueprint(app_views)
 CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
+# auth = None
+auth = getenv('AUTH_TYPE', None)
+if auth:
+    from api.v1.auth.auth import Auth
+    auth = Auth()
 
 
 @app.errorhandler(404)
@@ -31,6 +36,31 @@ def unauthorizef(error) -> str:
 def forbidden(error) -> str:
     """403 forbidden wrr handler"""
     return jsonify({"error": "Forbidden"}), 403
+
+
+@app.before_request
+def filter_request() -> str:
+    """Filters authentication necesary requests"""
+    # user must fufil authorization before they can access these endpoints
+    auth_endpoints = [
+        '/api/v1/status/', '/api/v1/unauthorized/',
+        '/api/v1/forbidden/'
+    ]
+
+    if not auth:
+        return
+
+    if auth.require_auth(request.path, auth_endpoints):
+        # requested path is an endpoint that needs authr
+        return
+
+    if not auth.authorization_header(request):
+        # theres no Authorization header in the users request
+        abort(401)
+
+    if not current_user(request):
+        # No client currently logged in
+        abort(403)
 
 
 if __name__ == "__main__":
