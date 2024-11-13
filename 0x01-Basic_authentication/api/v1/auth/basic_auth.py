@@ -40,3 +40,16 @@ class BasicAuth(Auth):
             return None
 
         return decoded
+
+    def extract_user_credentials(
+            self, decoded_base64_authorization_header: str
+    ) -> (str, str):
+        """Return a tuple of extracted user credentials from Auth header"""
+        if not isinstance(decoded_base64_authorization_header, str):
+            return None
+
+        parsed_credential = decoded_base64_authorization_header.split(':')
+        if not parsed_credential:
+            return None
+
+        return (parsed_credential[0], parsed_credential[1])
