@@ -5,8 +5,15 @@ Authorization for API
 modules imported: flask.request, typing.TypeVar
 
 """
-from flask import request
-from typing import TypeVar
+from flask import (
+    request,
+    Request,
+)
+from typing import (
+    Optional,
+    TypeVar,
+    List,
+)
 
 
 class Auth:
@@ -19,10 +26,10 @@ class Auth:
         """Checks if client auth is required"""
         return False
 
-    def authorization_header(self, request=None) -> str:
+    def authorization_header(self, request: Request = None) -> Optional[str]:
         """Gets the request header from a request obj"""
         return None
 
-    def current_user(self, request=None) -> TypeVar('User'):
+    def current_user(self, request: Request = None) -> TypeVar('User'):
         """Returns the current client"""
         return None
