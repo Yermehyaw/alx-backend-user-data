@@ -21,7 +21,11 @@ class Auth:
     """Authorization class
 
     Attributes:
-    None
+    require_path(): Returns true if a request to a path needs
+    authentication
+    authorization_header(): Returns the value present in the
+    Authorization i the request header
+    current_user(): Verifies if a client is logged in
     """
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """Checks if client auth is required"""
