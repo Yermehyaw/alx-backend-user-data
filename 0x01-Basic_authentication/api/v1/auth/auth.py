@@ -14,6 +14,7 @@ from typing import (
     TypeVar,
     List,
 )
+import re
 
 
 class Auth:
@@ -24,6 +25,17 @@ class Auth:
     """
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """Checks if client auth is required"""
+        if not path or not excluded_paths:
+            return True
+
+        last_char_pattern = r"/$"
+        if not re.search(last_char_pattern, path):
+            # if the last char isnt a '/'
+            path = path + '/'
+
+        if path not in excluded_paths:
+            return True
+
         return False
 
     def authorization_header(self, request: Request = None) -> Optional[str]:
