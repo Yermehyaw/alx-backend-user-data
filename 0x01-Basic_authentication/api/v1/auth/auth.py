@@ -9,6 +9,7 @@ from flask import (
     request,
     Request,
 )
+from model.user import User
 from typing import (
     Optional,
     TypeVar,
