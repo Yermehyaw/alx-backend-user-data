@@ -29,7 +29,7 @@ class Auth:
     current_user(): Verifies if a client is logged in
     """
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
-        """Checks if client auth is required"""
+        """Returns true if the path does NOT require auth"""
         if not path or not excluded_paths:
             return True
 
@@ -38,10 +38,10 @@ class Auth:
             # if the last char isnt a '/'
             path = path + '/'
 
-        if path not in excluded_paths:
-            return True
+        if path in excluded_paths:
+            return False
 
-        return False
+        return True
 
     def authorization_header(self, request: Request = None) -> Optional[str]:
         """Gets the request header from a request obj"""
