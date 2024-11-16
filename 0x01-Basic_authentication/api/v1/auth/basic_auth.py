@@ -15,6 +15,16 @@ from typing import TypeVar
 
 class BasicAuth(Auth):
     """Holds mthds and variables for BasicAuthentication in the API
+
+    Attributes:
+    extract_base64_authorization_header(): returns the value of the
+    Authorization header encoded in base64 if present
+    decode_base64_authorization_header(): decode base64 string
+    extract_user_credentials(): return user credentials frm decoded
+    base64 str
+    user_object_from_credentials(): Return the corresponding user obj
+    frm memory which matches the extracted credentials
+    current_user(): Combines all the functionalities of prev mthds
     """
     def extract_base64_authorization_header(
             self, authorization_header: str
