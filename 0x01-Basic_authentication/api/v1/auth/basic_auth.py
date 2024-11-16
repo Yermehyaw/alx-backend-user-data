@@ -87,7 +87,7 @@ class BasicAuth(Auth):
     def current_user(self, request=None) -> TypeVar('User'):
         """overloads Auth and retrieves the User instance for a request"""
         if not request:
-            retutn None
+            return None
 
         auth = BasicAuth()
         auth_str = auth.authorization_header(request)
