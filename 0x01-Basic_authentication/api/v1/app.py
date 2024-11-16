@@ -53,7 +53,7 @@ def filter_request() -> str:
     if not auth:
         return
 
-    if auth.require_auth(request.path, auth_endpoints):
+    if not auth.require_auth(request.path, auth_endpoints):
         # requested path is an endpoint that needs authr
         return
 
