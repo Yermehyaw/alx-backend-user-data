@@ -6,7 +6,7 @@ modules imported: flask.request, typing, TypeVar
 
 """
 from flask import (
-    request,
+    request as requests,
 )
 from models.user import User
 from typing import (
@@ -44,7 +44,7 @@ class Auth:
 
     def authorization_header(self, request=None) -> Optional[str]:
         """Gets the request header from a request obj"""
-        auth_header = request.headers.get('Authorization')
+        auth_header = requests.headers.get('Authorization')
         if not request or not auth_header:
             return None
         return auth_header
