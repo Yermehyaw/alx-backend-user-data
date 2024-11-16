@@ -28,7 +28,7 @@ class Auth:
     current_user(): Verifies if a client is logged in
     """
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
-        """Returns true if the path does NOT require auth"""
+        """Returns true if the path requires auth"""
         if not path or not excluded_paths:
             return True
 
@@ -47,11 +47,7 @@ class Auth:
         if not request:
             return None
 
-        auth_header = request.headers.get('Authorization')
-        if not auth_header:
-            return None
-
-        return auth_header
+        return request.headers.get('Authorization')
 
     def current_user(self, request=None) -> TypeVar('User'):
         """Returns the current client"""
