@@ -37,24 +37,24 @@ def unauthorizef(error) -> str:
 
 @app.errorhandler(403)
 def forbidden(error) -> str:
-    """403 forbidden wrr handler"""
+    """403 forbidden err handler"""
     return jsonify({"error": "Forbidden"}), 403
 
 
 @app.before_request
 def filter_request() -> str:
-    """Filters authentication necesary requests"""
-    # user must fufil authorization before they can access these endpoints
+    """Filters authentication necessary requests"""
+    # these endpoints can be accessed withoit authentication/authorization
     auth_endpoints = [
         '/api/v1/status/', '/api/v1/unauthorized/',
-        '/api/v1/forbidden/'
+        '/api/v1/forbidden/', '/api/v1/auth_session/login/'
     ]
 
     if not auth:
         return
 
-    if auth.require_auth(request.path, auth_endpoints):
-        # requested path is an endpoint that needs authr
+    if not auth.require_auth(request.path, auth_endpoints):
+        # requested path is an endpoint that doesnt need auth
         return
 
     if not auth.authorization_header(request):
@@ -65,6 +65,9 @@ def filter_request() -> str:
         # No client currently logged in
         abort(403)
 
+    if not auth.session_cookie(request):
+        # user has no running session, abort with unauthorized
+        abort(401)
 
 if __name__ == "__main__":
     host = getenv("API_HOST", "0.0.0.0")
