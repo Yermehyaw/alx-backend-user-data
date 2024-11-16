@@ -7,7 +7,6 @@ modules imported: flask.request, typing, TypeVar
 """
 from flask import (
     request,
-    Request,
 )
 from models.user import User
 from typing import (
@@ -43,13 +42,13 @@ class Auth:
 
         return True
 
-    def authorization_header(self, request: Request = None) -> Optional[str]:
+    def authorization_header(self, request=None) -> Optional[str]:
         """Gets the request header from a request obj"""
         auth_header = request.headers.get('Authorization')
         if not request or not auth_header:
             return None
         return auth_header
 
-    def current_user(self, request: Request = None) -> TypeVar('User'):
+    def current_user(self, request=None) -> TypeVar('User'):
         """Returns the current client"""
         return None
