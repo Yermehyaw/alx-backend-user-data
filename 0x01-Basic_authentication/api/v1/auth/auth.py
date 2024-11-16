@@ -38,9 +38,9 @@ class Auth:
             path = path + '/'
 
         if path in excluded_paths:
-            return False
+            return True
 
-        return True
+        return False
 
     def authorization_header(self, request=None) -> Optional[str]:
         """Gets the request header from a request obj"""
