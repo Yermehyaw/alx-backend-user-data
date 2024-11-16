@@ -44,10 +44,13 @@ class Auth:
 
     def authorization_header(self, request=None) -> Optional[str]:
         """Gets the request header from a request obj"""
-        if not request or not auth_header:
+        if not request:
             return None
 
         auth_header = request.headers.get('Authorization')
+        if not auth_header:
+            return None
+
         return auth_header
 
     def current_user(self, request=None) -> TypeVar('User'):
