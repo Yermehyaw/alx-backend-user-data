@@ -42,7 +42,7 @@ def forbidden(error) -> str:
 
 
 @app.before_request
-def filter_request() -> str:
+def filter_request():
     """Filters authentication necessary requests"""
     # these endpoints can be accessed withoit authentication/authorization
     auth_endpoints = [
@@ -62,12 +62,13 @@ def filter_request() -> str:
         abort(401)
 
     if not current_user(request):
-        # No client currently logged in
+        # No client currently logged in, abort with forbidden
         abort(403)
 
     if not auth.session_cookie(request):
         # user has no running session, abort with unauthorized
         abort(401)
+
 
 if __name__ == "__main__":
     host = getenv("API_HOST", "0.0.0.0")
