@@ -30,7 +30,10 @@ class BasicAuth(Auth):
     def extract_base64_authorization_header(
             self, authorization_header: str
     ) -> str:
-        """Returns the Base64 encoded str in Authorization header"""
+        """
+        Returns the Base64 encoded str in Authorization header for user
+        authentication purposes on the api
+        """
         if not isinstance(authorization_header, str):
             return None
 
@@ -42,7 +45,11 @@ class BasicAuth(Auth):
     def decode_base64_authorization_header(
             self, base64_authorization_header: str
     ) -> str:
-        """Returns the decoded Base64 str from the Authorization header"""
+        """
+        Returns the decoded Base64 str from the Authorization header,
+        otherwise None.
+        The decoded str is separated by a colon
+        """
         if not isinstance(base64_authorization, str):
             return None
 
@@ -57,7 +64,10 @@ class BasicAuth(Auth):
     def extract_user_credentials(
             self, decoded_base64_authorization_header: str
     ) -> (str, str):
-        """Return a tuple of extracted user credentials from Auth header"""
+        """
+        Return a tuple of extracted user credentials from Auth header i.e
+        (username, password) to be used for regenerating the user obj
+        """
         if not isinstance(decoded_base64_authorization_header, str):
             return None
 
@@ -70,7 +80,10 @@ class BasicAuth(Auth):
     def user_object_from_credentials(
             self, user_email: str, user_pwd: str
     ) -> TypeVar('User'):
-        """Returns an instance of User that matches the credentials"""
+        """
+        Returns an instance of User that matches the credentials,
+        the obj and all its data in memory(JSON)
+        """
         if not user_email or not user_pwd:
             return None
 
@@ -96,7 +109,11 @@ class BasicAuth(Auth):
         return found
 
     def current_user(self, request=None) -> TypeVar('User'):
-        """overloads Auth and retrieves the User instance for a request"""
+        """
+        overloads Auth and retrieves the User instance for a request.
+        Utilizes all previous methods to create an instance in a
+        single step
+        """
         if not request:
             return None
 
