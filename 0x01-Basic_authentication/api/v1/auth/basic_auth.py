@@ -6,7 +6,7 @@ Modules imported: Auth, User, base64, binascii.Error,
 os.getenv, typing.TypeVar
 
 """
-from api.v1.auth.auth import Auth
+from .auth import Auth
 from models.user import User
 import base64
 from binascii import Error
