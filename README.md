@@ -9,3 +9,6 @@ Basic autgentication of a user vua HTTP headers encoded using Basuc64
 
 ## 0x02-Session_authentication
 Authenticating a user's session using cookies
+
+## 0x03-user_authentication_service
+Authenticating a user login credentials/create account request
