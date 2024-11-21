@@ -58,12 +58,10 @@ class DB:
 
     def find_user_by(self, **kwargs: Dict) -> TypeVar('User'):
         """Returns a row from the db matching the keyword arg passed"""
-        cols = ['email', 'id', 'session_id']
-        for key in kwargs.keys():
-            if key not in cols:
-                raise InvalidRequestError
-
-        user = self._session.query(User).filter_by(**kwargs).first()
+        try:
+            user = self._session.query(User).filter_by(**kwargs).first()
+        except AttributeError:  # invalid keyword in kwargs
+            raise InvalidRequestError
 
         if not user:
             raise NoResultFound
