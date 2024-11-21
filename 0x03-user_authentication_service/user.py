@@ -5,7 +5,6 @@ User model. A User clas sto describe what a user obj is in the DB
 Modules imported: sqlalchemy, bcrypt
 bcrypt: Encrypts user login
 sqlalchemy: maps model to a DB instance
-uuid: generates unique ids
 
 
 """
@@ -19,7 +18,6 @@ from sqlalchemy.ext.declarative import declarative_base
 from typing import (
     List,
 )
-from uuid import uuid4
 
 
 Base = declarative_base()
@@ -41,16 +39,14 @@ class User(Base):
     id = Column(Integer, primary_key=True)
     email = Column(String(250), nullable=False)
     hashed_password = Column(String(250), nullable=False)
-    session_id = Column(String(250), nullable=False)
-    reset_token = Column(String(250), nullable=False)
+    session_id = Column(String(250))
+    reset_token = Column(String(250))
 
+    """
     def __init__(self, email: str, password: str) -> None:
-        """Class obj initializer
-        """
+        Class obj initializer
         if not isinstance(email, str) or not isinstance(password, str):
             return
-
-        self.id = uuid4().int
 
         self.email = email
 
@@ -60,3 +56,4 @@ class User(Base):
         self.session_id = None
 
         self.reset_token = None
+        """
