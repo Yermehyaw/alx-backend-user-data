@@ -10,7 +10,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import Session
-from sqlalchemy.exc import IntegrityError
+from typing import TypeVar
 
 from user import Base
 from user import User
@@ -43,7 +43,7 @@ class DB:
             self.__session = DBSession()
         return self.__session
 
-    def add_user(self, email: str, hashed_password: str) -> None:
+    def add_user(self, email: str, hashed_password: str) -> TypeVar('User'):
         """Adds a new user to the database"""
         if not self.__session:
             # if no active session, call session creator
