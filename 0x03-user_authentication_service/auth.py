@@ -11,6 +11,6 @@ import bcrypt
 def _hash_password(password: str) -> bytes:
     """Hashes the users password credential"""
     if not isinstance(password, str):
-            return
+        return
     salt = bcrypt.gensalt()
     return bcrypt.hashpw(password.encode('utf-8'), salt)
