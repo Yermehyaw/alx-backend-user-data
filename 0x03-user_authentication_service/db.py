@@ -50,10 +50,9 @@ class DB:
 
     def add_user(self, email: str, hashed_password: str) -> TypeVar('User'):
         """Adds a new user to the database"""
-        current_session = self._session  # creates/rets a session
         user = User(email=email, hashed_password=hashed_password)
-        current_session.add(user)
-        current_session.commit()
+        self._session.add(user)
+        self._session.commit()
 
         return user
 
