@@ -15,13 +15,17 @@ from sqlalchemy import (
     Integer,
     String
 )
+from sqlalchemy.ext.declarative import declarative_base
 from typing import (
     List,
 )
 from uuid import uuid4
 
 
-class User():
+Base = declarative_base()
+
+
+class User(Base):
     """
     Describes a user obj
 
@@ -34,29 +38,11 @@ class User():
     """
     __tablename__ = 'users'
 
-    class __table__():
-        """Defines the SQL DB table coulmns
-
-        Attributes:
-        id(int): primary key, unique id of user
-        email(str): Nonnullable, email str of user
-        hashed_password(str): Non-nullable, encrypted pword
-        session_id(str): NNUL, unique session id
-        reset_token(str): NNUL, token for user's session
-        """
-        users = User()
-        users.id = Column(Integer, primary_key=True)
-        users.email = Column(String, nullable=False)
-        users.hashed_password = Column(String, nullable=False)
-        users.session_id = Column(String, nullable=False)
-        users.reset_token = Column(String, nullable=False)
-        columns = [
-            users.id,
-            users.email,
-            users.hashed_paswword,
-            users.session_id,
-            users.reset_token,
-        ]
+    id = Column(Integer, primary_key=True)
+    email = Column(String(250), nullable=False)
+    hashed_password = Column(String(250), nullable=False)
+    session_id = Column(String(250), nullable=False)
+    reset_token = Column(String(250), nullable=False)
 
     def __init__(self, email: str, password: str) -> None:
         """Class obj initializer
