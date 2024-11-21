@@ -45,16 +45,9 @@ class DB:
 
     def add_user(self, email: str, hashed_password: str) -> TypeVar('User'):
         """Adds a new user to the database"""
-        if not self.__session:
-            # if no active session, call session creator
-            self._session  # a prpty mthd that creates a sessiom
-
-        if not isinstance(email, str) or not isinstance(hashed_password, str):
-            return
-
+        current_session = self._session  # creates/rets a session
         user = User(email=email, hashed_password=hashed_password)
-
-        self.__session.add(user)
-        self.__session.commit()
+        current_session.add(user)
+        current_session.commit()
 
         return user
