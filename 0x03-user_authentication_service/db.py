@@ -32,7 +32,8 @@ class DB:
 
     """
     def __init__(self):
-        """Databse obj initializer"""
+        """Databse obj initializer
+        """
         self._engine = create_engine('sqlite:///a.db', echo=False)
         Base.metadata.drop_all(self._engine)
         Base.metadata.create_all(self._engine)
@@ -41,7 +42,6 @@ class DB:
     @property
     def _session(self) -> Session:
         """Memoized session object
-        Returns the current session of the DB
         """
         if self.__session is None:
             DBSession = sessionmaker(bind=self._engine)
