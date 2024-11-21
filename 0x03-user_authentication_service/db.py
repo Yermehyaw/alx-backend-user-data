@@ -52,9 +52,7 @@ class DB:
         if not isinstance(email, str) or not isinstance(hashed_password, str):
             return
 
-        user = User()
-        user.email = email
-        user.hashed_password = hashed_password
+        user = User(email=email, hashed_password=hashed_password)
 
         self.__session.add(user)
         self.__session.commit()
