@@ -51,7 +51,7 @@ class Auth:
         if not isinstance(email, str) or not isinstance(password, str):
             return False
 
-        user = AUTH._db.find_user_by(email)
+        user = self._db.find_user_by(email)
         if not user:
             return False
 
