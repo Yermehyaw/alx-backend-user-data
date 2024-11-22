@@ -11,10 +11,14 @@ from flask import (
 )
 
 
-app = Flask(__main__)
+app = Flask(__name__)
 
 
 @app.route('/', strict_slashes=False)
 def index():
     """Honepage of app"""
     return jsonify({"message": "Bienvenue"})
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port="5000")
