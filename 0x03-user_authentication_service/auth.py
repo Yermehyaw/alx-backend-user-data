@@ -45,3 +45,14 @@ class Auth:
 
         if user:  # user already exists
             raise ValueError(f'User {email} already exists')
+
+    def valid_login(self, email: str, password: str) -> bool:
+        """Ensures user login credentials are valid"""
+        if not isinstance(email, str) or not isinstance(password, str):
+            return False
+
+        user = AUTH._db.find_user_by(email)
+        if not user:
+            return False
+
+        return bcrypt.checkpw(password.encode('utf-8'), user.hashed_password)
