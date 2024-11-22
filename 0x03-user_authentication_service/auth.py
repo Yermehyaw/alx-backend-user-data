@@ -85,7 +85,7 @@ class Auth:
 
         return session_id
 
-    def get_user_from_session_id(session_id: str) -> str:
+    def get_user_from_session_id(self, session_id: str) -> str:
         """Returns the user currentlybusing the spec session_id"""
         if not isinstance(session_id, str):
             return
