@@ -84,3 +84,15 @@ class Auth:
         self._db.update_user(user.id, session_id=session_id)
 
         return session_id
+
+    def get_user_from_session_id(session_id: str) -> str:
+        """Returns the user currentlybusing the spec session_id"""
+        if not isinstance(session_id, str):
+            return
+
+        try:
+            user = self._db.filter_user_by(session_id=session_id)
+        except NoResultFound:
+            return
+
+        return user  # can still be None
