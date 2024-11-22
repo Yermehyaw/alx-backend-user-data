@@ -12,10 +12,6 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import Session
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.exc import InvalidRequestError
-from typing import (
-    TypeVar,
-    Dict,
-)
 
 from user import Base
 from user import User
@@ -56,7 +52,7 @@ class DB:
 
         return user
 
-    def find_user_by(self, **kwargs: Dict) -> User:
+    def find_user_by(self, **kwargs) -> User:
         """Returns a row from the db matching the keyword arg passed"""
         try:
             user = self._session.query(User).filter_by(**kwargs).first()
@@ -68,7 +64,7 @@ class DB:
 
         return user
 
-    def update_user(self, user_id: int, **kwargs: Dict) -> None:
+    def update_user(self, user_id: int, **kwargs) -> None:
         """Updates a user obj/table in db"""
         user = self.find_user_by(id=user_id)
 
