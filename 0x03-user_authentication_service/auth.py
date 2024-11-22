@@ -36,10 +36,7 @@ class Auth:
             return
 
         try:
-            user = self._db.find_user_by(
-                email=email,
-                hashed_password=password
-            )
+            user = self._db.find_user_by(email=email)
         except NoResultFound:
             # user dosent exist in db, create new user
             hashed = _hash_password(password)
