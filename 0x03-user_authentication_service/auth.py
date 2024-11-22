@@ -9,7 +9,6 @@ import bcrypt
 from db import DB
 from user import User
 from sqlalchemy.orm.exc import NoResultFound
-from typing import TypeVar
 
 
 def _hash_password(password: str) -> bytes:
@@ -29,7 +28,7 @@ class Auth:
     def __init__(self):
         self._db = DB()
 
-    def register_user(self, email: str, password: str) -> TypeVar('User'):
+    def register_user(self, email: str, password: str) -> User:
         """Registers a new user into the database, provided
         the credentiaks dont belong to any prev user
         """
@@ -47,4 +46,5 @@ class Auth:
             new_user = self._db.add_user(email, hashed)
             return new_user
 
-        raise ValueError(f'User {email} already exists')
+        if user:  # user already exists
+            raise ValueError(f'User {email} already exists')
