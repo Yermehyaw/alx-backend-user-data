@@ -59,7 +59,7 @@ class DB:
         except AttributeError:  # invalid keyword in kwargs
             raise InvalidRequestError
 
-        if not user:
+        if not user:  # user not found
             raise NoResultFound
 
         return user
