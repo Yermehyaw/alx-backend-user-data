@@ -48,7 +48,7 @@ class DB:
             self.__session = DBSession()
         return self.__session
 
-    def add_user(self, email: str, hashed_password: str) -> TypeVar('User'):
+    def add_user(self, email: str, hashed_password: str) -> User:
         """Adds a new user to the database"""
         user = User(email=email, hashed_password=hashed_password)
         self._session.add(user)
@@ -56,7 +56,7 @@ class DB:
 
         return user
 
-    def find_user_by(self, **kwargs: Dict) -> TypeVar('User'):
+    def find_user_by(self, **kwargs: Dict) -> User:
         """Returns a row from the db matching the keyword arg passed"""
         try:
             user = self._session.query(User).filter_by(**kwargs).first()
