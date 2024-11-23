@@ -97,9 +97,9 @@ class Auth:
 
         return user  # can still be None
 
-    def destroy_session(self, user_id: str) -> None:
+    def destroy_session(self, user_id: int) -> None:
         """Destroys the session of tge specified user"""
-        if not isinstance(user_id, str):
+        if not isinstance(user_id, int):
             return
 
         # set the session_id of the user with the user_id to None
