@@ -86,7 +86,7 @@ class Auth:
         return session_id
 
     def get_user_from_session_id(self, session_id: str) -> str:
-        """Returns the user currentlybusing the spec session_id"""
+        """Returns the user currently using the spec session_id"""
         if not isinstance(session_id, str):
             return None
 
@@ -95,7 +95,7 @@ class Auth:
         except NoResultFound:
             return None
 
-        return user  # can still be None
+        return user
 
     def destroy_session(self, user_id: int) -> None:
         """Destroys the session of the specified user"""
@@ -104,3 +104,16 @@ class Auth:
 
         # set the session_id of the user with the user_id to None
         self._db.update_user(user_id, session_id=None)
+
+    def get_reset_password_token(self, email: str) -> str:
+        """Returns the reset_token of the authorized/authenticated user"""
+        if not isinstance(email, str):
+            return None
+
+        try:
+            user = self._db.find_user_by(email=email)
+        except NoResultFound:
+            raise ValueError
+
+        user.reset_token = uuid4().__str__()
+        return user.reset_token
