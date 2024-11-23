@@ -102,5 +102,26 @@ def profile():
     return jsonify({"email": f"{user.email}"}), 200
 
 
+@app.route('/reset_password', strict_slashes=False)
+def get_reset_password_token():
+    """Displays a rest_token for a password reset request by a user
+    Not Secure: the users prov password isnt asked for before a
+    reset token is created
+    """
+    email = request.form.get('email')
+    if not email:
+        abort(403)  # forbidden, missing email paarm in form data
+
+    try:
+        reset_token = AUTH.get_reset_password_token(email)
+    except ValueError:  # user not found with the passed email
+        abort(403)
+
+    return jsonify({
+        "email": f"{user.email}",
+        "reset_token": f"{reset_token}"
+    }), 200
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port="5000")
