@@ -9,6 +9,7 @@ from flask import (
     abort,
     Flask,
     make_response,
+    redirect,
     request,
     jsonify,
 )
@@ -32,7 +33,7 @@ def users():
     password = request.form.get('password')
 
     if not email or not password:
-        return
+        abort(400)  # bad request, email or password missing
 
     try:
         user = AUTH.register_user(email, password)
@@ -66,6 +67,25 @@ def login():
     response.set_cookie('session_id', new_session)
 
     return response
+
+
+@app.route('/sessions', methods=['DELETE'], strict_slashes=False)
+def logout():
+    """Logout a user via the passed session cookie, destroys the session"""
+    session_id = request.cookies.get('session_id')
+    if not session_id:
+        abort(400)  # bad request
+
+    # get the user with the corresponding cookie
+    user = AUTH.get_user_from_session_id(session_id)
+    if not user:
+        abort(403)  # forbidden, incorrect cookie in header
+
+    # destroy the session
+    AUTH.destoy_session(user.id)
+
+    # redirect the user to the homepage
+    return redirect('/')
 
 
 if __name__ == "__main__":
