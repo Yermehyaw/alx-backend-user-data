@@ -117,3 +117,20 @@ class Auth:
 
         user.reset_token = uuid4().__str__()
         return user.reset_token
+
+    def update_password(self, reset_token: str, password: str) -> None:
+        """Updates the passord ofa user"""
+        if not isinstance(reset_token, str) or not isinstance(password, str):
+            raise TypeError('Args must be strings')
+
+        try:
+            user = self._db.find_user_by(reset_token=reset_token)
+        except NoResultFound:
+            raise ValueError
+
+        hashed = _hash_password(password)
+        # Update pasword
+        self._db.update_user(user.id, hashed_password=hashed)
+
+        # Prevent a user frm using the same reset_token twice
+        self._db.update_user(user.id, reset_token=None)
