@@ -88,8 +88,8 @@ def logout():
     return redirect('/')
 
 
-@app.route('/profile', methods=['GET'], strict_slashes=False)
-def profile:
+@app.route('/profile', strict_slashes=False)
+def profile():
     """Displays the profile of the user matching the credentials"""
     session_id = request.cookies.get('session_id')
     if not session_id:
@@ -99,7 +99,7 @@ def profile:
     if not user:
         abort(403)  # forbidden, incorrect/unmatched session_id
 
-    return jsonify({"email": f"{user.email}"})
+    return jsonify({"email": f"{user.email}"}), 200
 
 
 if __name__ == "__main__":
