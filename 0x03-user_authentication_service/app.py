@@ -82,7 +82,7 @@ def logout():
         abort(403)  # forbidden, incorrect cookie in header
 
     # destroy the session
-    AUTH.destoy_session(user.id)
+    AUTH.destroy_session(user.id)
 
     # redirect the user to the homepage
     return redirect('/')
