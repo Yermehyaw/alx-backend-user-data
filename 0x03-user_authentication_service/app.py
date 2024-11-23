@@ -118,7 +118,7 @@ def get_reset_password_token():
         abort(403)
 
     return jsonify({
-        "email": f"{user.email}",
+        "email": f"{email}",
         "reset_token": f"{reset_token}"
     }), 200
 
