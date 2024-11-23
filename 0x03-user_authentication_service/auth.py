@@ -88,12 +88,12 @@ class Auth:
     def get_user_from_session_id(self, session_id: str) -> str:
         """Returns the user currentlybusing the spec session_id"""
         if not isinstance(session_id, str):
-            return
+            return None
 
         try:
             user = self._db.filter_user_by(session_id=session_id)
         except NoResultFound:
-            return
+            return None
 
         return user  # can still be None
 
