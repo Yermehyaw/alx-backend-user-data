@@ -137,7 +137,7 @@ def update_password():
     except ValueError:  # no user was found with the passed rest token
         abort(403)  # forbidden
 
-    return jsonify({"email": f"{email}"}, "message": "Password updated"), 200
+    return jsonify({"email": f"{email}", "message": "Password updated"}), 200
 
 
 if __name__ == "__main__":
