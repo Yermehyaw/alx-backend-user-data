@@ -74,7 +74,7 @@ def logout():
     """Logout a user via the passed session cookie, destroys the session"""
     session_id = request.cookies.get('session_id')
     if not session_id:
-        abort(400)  # bad request
+        abort(403)  # forbidden
 
     # get the user with the corresponding cookie
     user = AUTH.get_user_from_session_id(session_id)
