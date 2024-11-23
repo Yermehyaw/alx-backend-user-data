@@ -102,10 +102,10 @@ def profile():
     return jsonify({"email": f"{user.email}"}), 200
 
 
-@app.route('/reset_password', strict_slashes=False)
+@app.route('/reset_password', methods=['POST'] strict_slashes=False)
 def get_reset_password_token():
     """Displays a rest_token for a password reset request by a user
-    Not Secure: the users prov password isnt asked for before a
+    Not Secure: the users prev password isnt requested before a
     reset token is created
     """
     email = request.form.get('email')
