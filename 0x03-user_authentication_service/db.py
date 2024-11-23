@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-SQL Databse class to handle storage and retrieval
+SQL Database class to handle storage and retrieval
 
 Modules imported:
 
@@ -66,7 +66,12 @@ class DB:
 
     def update_user(self, user_id: int, **kwargs) -> None:
         """Updates a user obj/table in db"""
-        user = self.find_user_by(id=user_id)
+        try:
+            user = self.find_user_by(id=user_id)
+        except NoResultFound:
+            return
+        if not user:
+            return
 
         for key, value in kwargs.items():
             if key not in User.__table__.columns:
